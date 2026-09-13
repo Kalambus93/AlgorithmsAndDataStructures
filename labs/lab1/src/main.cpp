@@ -11,17 +11,45 @@ struct Point
 };
 
 template <typename T>
+T GenerateValue(T min_value, T max_value)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> dis(static_cast<double>(min_value), static_cast<double>(max_value));
+
+    return static_cast<T>(dis(gen));
+}
+
+std::complex<float> GenerateValue(float min_value, float max_value)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(min_value, max_value);
+
+    return std::complex<float>(dis(gen), dis(gen));
+}
+
+std::complex<double> GenerateValue(double min_value, double max_value)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> dis(min_value, max_value);
+
+    return std::complex<double>(dis(gen), dis(gen));
+}
+
+template <typename T>
 class Polyline
 {
 private:
-    T *_data = nullptr;
+    Point<T> *_data = nullptr;
     int _size = 0;
     int _capacity = 0;
 
     void Reallocate(int new_capacity, int index)
     {
 
-        T *new_data = new T(new_capacity);
+        Point<T> *new_data = new Point<T>(new_capacity);
 
         if (index == -1)
         {
@@ -47,12 +75,7 @@ private:
         _capacity = new_capacity;
     }
 
-public:
-    Polyline() : _data(nullptr), _size(0), _capacity(0) {}
-
-    ~Polyline() { delete[] _data; }
-
-    void AddEnd(T element)
+    void AddEnd(Point<T> element)
     {
         if (_size == _capacity)
         {
@@ -70,6 +93,53 @@ public:
         Reallocate(new_capacity, index);
 
         --_size;
+    }
+
+public:
+    Polyline() : _data(nullptr), _size(0), _capacity(0) {}
+
+    ~Polyline() { delete[] _data; }
+
+    // Правило 5
+
+    // Параметр координат
+    Polyline(Point<T> coordinates)
+    {
+        AddEnd(coordinates);
+    }
+
+    // Параметр количества точек
+    Polyline(int count_point)
+    {
+        for (int i = 0; i < count_point; ++i)
+        {
+            int a = 100;
+            int b = 100;
+
+            T t_a = static_cast<T>(a);
+            T t_b = static_cast<T>(b);
+
+            Point point(GenerateValue(t_a, t_b), GenerateValue(t_a, t_b));
+            AddEnd(point);
+        }
+    }
+
+    // Параметр с диапозоном
+    Polyline(T a, T b)
+    {
+        Point point(GenerateValue(a, b), GenerateValue(a, b));
+        AddEnd(point);
+    }
+
+    T operator[](int index)
+    {
+        return _data[index];
+    }
+
+    T operator[](int index, T element)
+    {
+        _data[index] = element;
+        return _data[index];
     }
 };
 
