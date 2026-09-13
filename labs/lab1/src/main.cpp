@@ -101,6 +101,46 @@ public:
     ~Polyline() { delete[] _data; }
 
     // Правило 5
+
+    // Параметр координат
+    Polyline(Point<T> coordinates)
+    {
+        AddEnd(coordinates);
+    }
+
+    // Параметр количества точек
+    Polyline(int count_point)
+    {
+        for (int i = 0; i < count_point; ++i)
+        {
+            int a = 100;
+            int b = 100;
+
+            T t_a = static_cast<T>(a);
+            T t_b = static_cast<T>(b);
+
+            Point point(GenerateValue(t_a, t_b), GenerateValue(t_a, t_b));
+            AddEnd(point);
+        }
+    }
+
+    // Параметр с диапозоном
+    Polyline(T a, T b)
+    {
+        Point point(GenerateValue(a, b), GenerateValue(a, b));
+        AddEnd(point);
+    }
+
+    T operator[](int index)
+    {
+        return _data[index];
+    }
+
+    T operator[](int index, T element)
+    {
+        _data[index] = element;
+        return _data[index];
+    }
 };
 
 int main()
