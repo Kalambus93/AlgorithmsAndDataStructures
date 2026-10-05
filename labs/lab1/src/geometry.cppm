@@ -1,6 +1,8 @@
 export module geometry;
 
-template <typename T>
+import std;
+
+export template <typename T>
 struct Point
 {
     T _x = 0;
@@ -9,7 +11,7 @@ struct Point
     Point(T x, T y) : _x(x), _y(y) {}
 };
 
-template <typename T>
+export template <typename T>
 class Polyline
 {
 private:
