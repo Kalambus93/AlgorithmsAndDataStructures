@@ -7,4 +7,5 @@ target_sources("lab1"
   PRIVATE
     "src/main.cpp"
   PRIVATE FILE_SET "modules" TYPE CXX_MODULES FILES
-  "src/geometry.cppm")
+  "src/geometry.cppm"
+  "src/randomizer.cppm")
