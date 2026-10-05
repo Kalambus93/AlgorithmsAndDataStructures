@@ -1,9 +1,9 @@
 project(Lab1 CXX)
 
 
-add_executable(lab3)
+add_executable(lab1)
 
-target_sources("lab3"
+target_sources("lab1"
   PRIVATE
     "src/main.cpp"
   PRIVATE FILE_SET "modules" TYPE CXX_MODULES FILES
