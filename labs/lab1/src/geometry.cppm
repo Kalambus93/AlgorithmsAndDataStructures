@@ -95,4 +95,55 @@ public:
     {
         delete[] _data;
     }
+
+    Polyline(const Polyline &other) : _data(new Point<T>[other._size]), _count(other._count), _size(other._size)
+    {
+        for (int i = 0; i < _count; ++i)
+        {
+            _data[i] = other._data[i];
+        }
+    }
+
+    Polyline &operator=(const Polyline &other)
+    {
+        if (this != &other)
+        {
+            delete[] _data;
+
+            _size = other._size;
+            _count = other._count;
+            _data = new Point<T>[_size];
+
+            for (int i = 0; i < _count; ++i)
+            {
+                _data[i] = other._data[i];
+            }
+        }
+
+        return *this;
+    }
+
+    Polyline(Polyline &&other) noexcept : _data(other._data), _count(other._count), _size(other._size)
+    {
+        other._data = nullptr;
+        other._size = 0;
+        other._count = 0;
+    }
+    Polyline &operator=(Polyline &&other) noexcept
+    {
+        if (this != &other)
+        {
+            delete[] _data;
+
+            _size = other._size;
+            _count = other._count;
+            _data = other._data;
+
+            other._data = nullptr;
+            other._count = 0;
+            other._size = 0;
+        }
+
+        return *this;
+    }
 };
