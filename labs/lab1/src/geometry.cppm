@@ -10,6 +10,46 @@ struct Point
     T _y = 0;
     Point() : _x(0), _y(0) {}
     Point(T x, T y) : _x(x), _y(y) {}
+
+    T GetX() const
+    {
+        return _x;
+    }
+
+    T GetY() const
+    {
+        return _y;
+    }
+
+    bool operator==(const Point &other) const
+    {
+        if constexpr (std::is_same_v<T, int>)
+        {
+            return _x == other._x && _y == other._y;
+        }
+
+        else if constexpr (std::is_same_v<T, float> || std::is_same_v<T, std::complex<float>>)
+        {
+            float eps = 1e-5f;
+            return std::abs(_x - other._x) < eps && std::abs(_y - other._y) < eps;
+        }
+
+        else if constexpr (std::is_same_v<T, double> || std::is_same_v<T, std::complex<double>>)
+        {
+            double eps = 1e-9;
+            return std::abs(_x - other._x) < eps && std::abs(_y - other._y) < eps;
+        }
+
+        else
+        {
+            return _x == other._x && _y == other._y;
+        }
+    }
+
+    bool operator!=(const Point &other) const
+    {
+        return !(*this == other);
+    }
 };
 
 export template <typename T>
@@ -94,7 +134,7 @@ public:
         return *this;
     }
 
-    void AddPoint(Point<T> new_point)
+    void AddPoint(const Point<T> &new_point)
     {
         if (_count >= _size)
         {
@@ -108,35 +148,53 @@ public:
 
     void ErasePoint(int index)
     {
-        if (index < 0 || index >= _count)
+        try
         {
-            throw std::out_of_range("Index is out of polyline range");
+            if (index < 0 || index >= _count)
+            {
+                throw std::out_of_range("Index is out of polyline range");
+            }
+
+            for (int i = index; i < _count - 1; ++i)
+            {
+                _data[i] = _data[i + 1];
+            }
+
+            --_count;
         }
 
-        for (int i = index; i < _count - 1; ++i)
+        catch (const std::out_of_range &e)
         {
-            _data[i] = _data[i + 1];
+            std::cout << "\n"
+                      << e.what() << "\n";
         }
-
-        --_count;
     }
 
-    Polyline(Point<T> first_point)
+    Polyline(Point<T> point)
     {
-        AddPoint(first_point);
+        AddPoint(point);
     }
 
     Polyline() = default;
 
-    // Сделать для разных типов
     Polyline(int count_points)
     {
         for (int i = 0; i < count_points; ++i)
         {
-            int x_rand = Randomizer(1, 1000);
-            int y_rand = Randomizer(1, 1000);
-            Point<T> random_point(x_rand, y_rand);
-            AddPoint(random_point);
+            if constexpr (std::is_same_v<T, std::complex<float>> || std::is_same_v<T, std::complex<double>>)
+            {
+                T x_rand = Randomizer(T(1, 1), T(1000, 1000));
+                T y_rand = Randomizer(T(1, 1), T(1000, 1000));
+                Point<T> random_point(x_rand, y_rand);
+                AddPoint(random_point);
+            }
+            else
+            {
+                T x_rand = Randomizer(T(1), T(1000));
+                T y_rand = Randomizer(T(1), T(1000));
+                Point<T> random_point(x_rand, y_rand);
+                AddPoint(random_point);
+            }
         }
     }
 
@@ -149,13 +207,143 @@ public:
         }
     }
 
-    int GetSize()
+    const Point<T> &operator[](int index) const
+    {
+        if (index < 0 || index >= _count)
+        {
+            throw std::out_of_range("Index is out of polyline range");
+        }
+
+        return _data[index];
+    }
+
+    Point<T> &operator[](int index)
+    {
+        if (index < 0 || index >= _count)
+        {
+            throw std::out_of_range("Index is out of polyline range");
+        }
+
+        return _data[index];
+    }
+
+    Polyline operator+(const Polyline &other) const
+    {
+        Polyline<T> result;
+
+        int result_count = _count + other._count;
+
+        if (result_count > 0)
+        {
+            result.Reallocate(result_count * 2);
+
+            for (int i = 0; i < _count; ++i)
+            {
+                result.AddPoint(_data[i]);
+            }
+
+            for (int i = 0; i < other._count; ++i)
+            {
+                result.AddPoint(other._data[i]);
+            }
+        }
+
+        return result;
+    }
+
+    Polyline operator+(const Point<T> point) const
+    {
+        Polyline<T> result;
+
+        int result_count = _count + 1;
+
+        if (result_count > 0)
+        {
+            result.Reallocate(result_count);
+
+            for (int i = 0; i < _count; ++i)
+            {
+                result.AddPoint(_data[i]);
+            }
+
+            result.AddPoint(point);
+        }
+
+        return result;
+    }
+
+    bool operator==(const Polyline &other) const
+    {
+        if (_count != other._count)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < _count; ++i)
+        {
+            if (_data[i] != other._data[i])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    bool operator!=(const Polyline &other) const
+    {
+        if (_count != other._count)
+        {
+            return true;
+        }
+
+        for (int i = 0; i < _count; ++i)
+        {
+            if (_data[i] != other._data[i])
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    int GetSize() const
     {
         return _size;
     }
 
-    int GetCount()
+    int GetCount() const
     {
         return _count;
     }
+
+    Point<T> GetData(int index) const
+    {
+        if (index < 0 || index >= _count)
+        {
+            throw std::out_of_range("Index is out of polyline range");
+        }
+
+        return _data[index];
+    }
 };
+
+export template <typename T>
+Polyline<T> operator+(const Point<T> &point, const Polyline<T> &line)
+{
+    Polyline<T> result;
+
+    int result_count = 1 + line.GetCount();
+
+    if (result_count > 0)
+    {
+        result.AddPoint(point);
+
+        for (int i = 0; i < line.GetCount(); ++i)
+        {
+            result.AddPoint(line.GetData(i));
+        }
+    }
+    return result;
+}
