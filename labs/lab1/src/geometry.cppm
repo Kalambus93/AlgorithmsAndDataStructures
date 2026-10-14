@@ -53,6 +53,40 @@ struct Point
 };
 
 export template <typename T>
+std::ostream &operator<<(std::ostream &out, const Point<T> &p)
+{
+    if constexpr (std::is_same_v<T, int>)
+    {
+        out << "(" << p.GetX() << ", " << p.GetY() << ")";
+    }
+    else if constexpr (std::is_same_v<T, float>)
+    {
+        out << "(" << std::fixed << std::setprecision(3) << p.GetX()
+            << ", " << std::fixed << std::setprecision(3) << p.GetY() << ")";
+    }
+    else if constexpr (std::is_same_v<T, double>)
+    {
+        out << "(" << std::fixed << std::setprecision(5) << p.GetX()
+            << ", " << std::fixed << std::setprecision(5) << p.GetY() << ")";
+    }
+    else if constexpr (std::is_same_v<T, std::complex<float>>)
+    {
+        out << "((" << std::fixed << std::setprecision(3) << p.GetX().real()
+            << "," << std::fixed << std::setprecision(3) << p.GetX().imag() << "), ("
+            << std::fixed << std::setprecision(3) << p.GetY().real()
+            << "," << std::fixed << std::setprecision(3) << p.GetY().imag() << "))";
+    }
+    else if constexpr (std::is_same_v<T, std::complex<double>>)
+    {
+        out << "((" << std::fixed << std::setprecision(5) << p.GetX().real()
+            << "," << std::fixed << std::setprecision(5) << p.GetX().imag() << "), ("
+            << std::fixed << std::setprecision(5) << p.GetY().real()
+            << "," << std::fixed << std::setprecision(5) << p.GetY().imag() << "))";
+    }
+    return out;
+}
+
+export template <typename T>
 class Polyline
 {
 private:
@@ -346,4 +380,22 @@ Polyline<T> operator+(const Point<T> &point, const Polyline<T> &line)
         }
     }
     return result;
+}
+
+export template <typename T>
+std::ostream &operator<<(std::ostream &out, const Polyline<T> &line)
+{
+    out << "[";
+    for (int i = 0; i < line.GetCount(); ++i)
+    {
+        Point<T> p = line[i];
+        out << p;
+
+        if (i != line.GetCount() - 1)
+        {
+            out << ", ";
+        }
+    }
+    out << "]";
+    return out;
 }
