@@ -399,3 +399,69 @@ std::ostream &operator<<(std::ostream &out, const Polyline<T> &line)
     out << "]";
     return out;
 }
+
+export template <typename T>
+T LenPolyline(const Polyline<T> &line)
+{
+    if (line.GetCount() < 2)
+        return 0;
+
+    T final_summ = 0;
+
+    for (int i = 0; i < line.GetCount() - 1; ++i)
+    {
+        Point<T> p1 = line[i];
+        Point<T> p2 = line[i + 1];
+
+        T delta_x = p2._x - p1._x;
+        T delta_y = p2._y - p1._y;
+
+        final_summ += std::sqrt(delta_x * delta_x + delta_y * delta_y);
+    }
+
+    return final_summ;
+}
+
+export template <typename T>
+double LenPolyline(const Polyline<std::complex<T>> &line)
+{
+    if (line.GetCount() < 2)
+    {
+        return 0.0;
+    }
+
+    double final_summ = 0.0;
+
+    for (int i = 0; i < line.GetCount() - 1; ++i)
+    {
+        std::complex<T> x1 = line[i].GetX();
+        std::complex<T> x2 = line[i + 1].GetX();
+
+        double real_x1 = static_cast<double>(x1.real());
+        double imag_x1 = static_cast<double>(x1.imag());
+        double real_x2 = static_cast<double>(x2.real());
+        double imag_x2 = static_cast<double>(x2.imag());
+
+        double delta_real_x = (real_x1 - real_x2) * (real_x1 - real_x2);
+        double delta_imag_x = (imag_x1 - imag_x2) * (imag_x1 - imag_x2);
+
+        double delta_x = std::sqrt(delta_real_x + delta_imag_x);
+
+        std::complex<T> y1 = line[i].GetY();
+        std::complex<T> y2 = line[i + 1].GetY();
+
+        double real_y1 = static_cast<double>(y1.real());
+        double imag_y1 = static_cast<double>(y1.imag());
+        double real_y2 = static_cast<double>(y2.real());
+        double imag_y2 = static_cast<double>(y2.imag());
+
+        double delta_real_y = (real_y1 - real_y2) * (real_y1 - real_y2);
+        double delta_imag_y = (imag_y1 - imag_y2) * (imag_y1 - imag_y2);
+
+        double delta_y = std::sqrt(delta_real_y + delta_imag_y);
+
+        final_summ += std::sqrt(delta_x * delta_x + delta_y * delta_y);
+    }
+
+    return final_summ;
+}
