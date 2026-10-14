@@ -3,19 +3,21 @@ export module tasks;
 import std;
 import geometry;
 
-export int Factorial(int n)
+export template <typename T>
+Polyline<T> Triangle(const Point<T> &point, const T &c, const T &angle)
 {
-    if (n < 0)
-    {
-        throw std::logic_error("Negative number");
-    }
+    T sin_angle = std::sin(angle);
+    T cos_angle = std::cos(angle);
 
-    int temp = n;
+    T a = std::abs(c) * sin_angle;
+    T b = std::abs(c) * cos_angle;
 
-    if (temp == 1 || temp == 0)
-    {
-        return 1;
-    }
+    Point<T> point_left_base(point._x - a, point._y - b);
+    Point<T> point_right_base(point._x + a, point._y - b);
 
-    return temp * Factorial(temp - 1);
+    Polyline<T> triangle(point);
+    triangle.AddPoint(point_left_base);
+    triangle.AddPoint(point_right_base);
+
+    return triangle;
 }
