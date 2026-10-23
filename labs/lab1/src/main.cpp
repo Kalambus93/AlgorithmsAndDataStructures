@@ -190,5 +190,12 @@ int main()
               << "\n"
               << "ComplexDouble" << "\n";
     TestComplex<double>();
+
+    std::cout << "\n"
+              << "Task with triangle" << "\n";
+    Point<double> point_user(10.0, 20.0);
+    Polyline<double> line_user = Triangle(point_user, 5.0, 30.0);
+    std::cout << line_user << "\n";
+
     return 0;
 }
