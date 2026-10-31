@@ -16,7 +16,7 @@ private:
     Node<T> *_tail;
 
 public:
-    TwoLinkedLists() : p(nullptr) {}
+    TwoLinkedLists() : head(nullptr), tail(nullptr) {}
 
     TwoLinkedLists() {}
 
