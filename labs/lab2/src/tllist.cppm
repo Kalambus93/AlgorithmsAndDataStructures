@@ -172,7 +172,30 @@ public:
         }
     }
 
-    const Node<T> &operator[](int &index) const {}
+    const Node<T> &operator[](int &index) const
+    {
+        if (index < 0)
+        {
+            throw std::out_of_range("Invalid index");
+        }
+
+        Node *current = _head;
+        for (int i = 0; i < index; ++i)
+        {
+            if (!current)
+            {
+                throw std::out_of_range("Index out of range");
+            }
+            current = current->_next;
+        }
+
+        if (!current)
+        {
+            throw std::out_of_range("Invalid index");
+        }
+
+        return *current;
+    }
 
     Node<T> &operator[](int &index) {}
 };
