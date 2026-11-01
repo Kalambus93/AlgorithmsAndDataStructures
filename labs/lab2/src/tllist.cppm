@@ -84,7 +84,13 @@ public:
         }
     }
 
-    void push_head(TwoLinkedLists &list) {}
+    void push_head(const TwoLinkedLists &list)
+    {
+        for (int i = list.GetSize() - 1; i >= 0; --i)
+        {
+            this->push_head(list[i]);
+        }
+    }
 
     void pop_head()
     {
