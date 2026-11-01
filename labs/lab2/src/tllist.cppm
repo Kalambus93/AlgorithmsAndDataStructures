@@ -56,7 +56,24 @@ public:
 
     void push_tail(TwoLinkedLists &list) {}
 
-    void push_head(Node<T> &el) {}
+    void push_head(T &el)
+    {
+        Node *new_node = new Node(el);
+
+        if (_head == nullptr)
+        {
+            _head = new_node;
+        }
+        else
+        {
+            new_node->_next = _head;
+            new_node->_prev = nullptr;
+
+            _head->_prev = new_node;
+
+            _head = new_node;
+        }
+    }
 
     void push_head(TwoLinkedLists &list) {}
 
