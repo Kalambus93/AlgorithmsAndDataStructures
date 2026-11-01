@@ -77,9 +77,66 @@ public:
 
     void push_head(TwoLinkedLists &list) {}
 
-    void pop_head() {}
+    void pop_head()
+    {
+        try
+        {
+            if (_head == nullptr)
+            {
+                throw std::out_of_range("Index is out");
+            }
 
-    void pop_tail() {}
+            Node *current = _head;
+            _head = _head->_next;
+
+            if (_head)
+            {
+                _head->_prev = nullptr;
+            }
+
+            delete current;
+            current = nullptr;
+        }
+
+        catch (const std::out_of_range &e)
+        {
+            std::cout << "\n"
+                      << e.what() << "\n";
+        }
+    }
+
+    void pop_tail()
+    {
+        try
+        {
+            Node *current = _head;
+
+            if (_head == nullptr)
+            {
+                throw std::out_of_range("Index is out");
+            }
+
+            if (current->_next == nullptr)
+            {
+                delete _head;
+                return;
+            }
+
+            while (current->_next->_next != nullptr)
+            {
+                current = current->_next;
+            }
+
+            delete current->_next;
+            current->_next = nullptr;
+        }
+
+        catch (const std::out_of_range &e)
+        {
+            std::cout << "\n"
+                      << e.what() << "\n";
+        }
+    }
 
     void delete_node(T info) {}
 
