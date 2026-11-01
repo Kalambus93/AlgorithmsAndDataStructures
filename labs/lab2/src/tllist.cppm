@@ -56,7 +56,14 @@ public:
         }
     }
 
-    void push_tail(TwoLinkedLists &list) {}
+    void push_tail(const TwoLinkedLists &list)
+    {
+
+        for (int i = 0; i < list.GetSize(); ++i)
+        {
+            this->push_tail(list[i]);
+        }
+    }
 
     void push_head(T &el)
     {
