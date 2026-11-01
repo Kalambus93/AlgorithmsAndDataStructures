@@ -30,7 +30,29 @@ public:
 
     TwoLinkedLists &operator=(TwoLinkedLists &&other) noexcept {}
 
-    void push_tail(Node<T> &el) {}
+    void push_tail(T &el)
+    {
+        Node *new_node = new Node(el);
+
+        if (_head == nullptr)
+        {
+            _head = new_node;
+        }
+
+        else
+        {
+            Node *current = _head;
+            while (current->_next)
+            {
+                current = current->_next;
+            }
+
+            new_node->_next = nullptr;
+            new_node->_prev = current;
+
+            current->_next = new_node;
+        }
+    }
 
     void push_tail(TwoLinkedLists &list) {}
 
