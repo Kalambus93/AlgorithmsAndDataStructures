@@ -234,7 +234,12 @@ public:
             throw std::out_of_range("Invalid index");
         }
 
-        return *current;
+        return current->_info;
+    }
+
+    int GetSize() const
+    {
+        return _size;
     }
 };
 
