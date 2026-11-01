@@ -54,6 +54,8 @@ public:
 
             current->_next = new_node;
         }
+
+        ++_size;
     }
 
     void push_tail(const TwoLinkedLists &list)
@@ -82,6 +84,8 @@ public:
 
             _head = new_node;
         }
+
+        ++_size;
     }
 
     void push_head(const TwoLinkedLists &list)
@@ -111,6 +115,8 @@ public:
 
             delete current;
             current = nullptr;
+
+            --_size;
         }
 
         catch (const std::out_of_range &e)
@@ -134,6 +140,8 @@ public:
             if (current->_next == nullptr)
             {
                 delete _head;
+                _head = nullptr;
+                --_size;
                 return;
             }
 
@@ -144,6 +152,7 @@ public:
 
             delete current->_next;
             current->_next = nullptr;
+            --_size;
         }
 
         catch (const std::out_of_range &e)
@@ -179,6 +188,8 @@ public:
                 current = current->_next;
 
                 delete del;
+
+                --_size;
             }
             else
             {
@@ -209,7 +220,7 @@ public:
             throw std::out_of_range("Invalid index");
         }
 
-        return *current;
+        return current->_info;
     }
 
     T &operator[](int index)
