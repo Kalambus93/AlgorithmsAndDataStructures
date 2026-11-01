@@ -1,24 +1,25 @@
+export module tllist;
+
 import std;
 
-template <typename T>
-export struct Node
-{
-    T _info;
-    Node *_prev;
-    Node *_next;
-};
-
-template <typename T>
-export class TwoLinkedLists
+export template <typename T>
+class TwoLinkedLists
 {
 private:
-    Node<T> *_head;
-    Node<T> *_tail;
+    struct Node
+    {
+        T _info;
+        Node *_prev;
+        Node *_next;
+
+        Node() : _info(), _prev(nullptr), _next(nullptr) {}
+        Node(T info) : _info(info), _prev(nullptr), _next(nullptr) {}
+    };
+
+    Node *_head;
 
 public:
-    TwoLinkedLists() : head(nullptr), tail(nullptr) {}
-
-    TwoLinkedLists() {}
+    TwoLinkedLists() : _head(nullptr) {}
 
     TwoLinkedLists(const TwoLinkedLists &other) {}
 
