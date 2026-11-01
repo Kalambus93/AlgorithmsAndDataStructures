@@ -138,7 +138,39 @@ public:
         }
     }
 
-    void delete_node(T info) {}
+    void delete_node(T info)
+    {
+        Node *current = _head;
+
+        while (current)
+        {
+            if (current->_info == info)
+            {
+                if (current->_prev != nullptr)
+                {
+                    current->_prev->_next = current->_next;
+                }
+                else
+                {
+                    _head = current->_next;
+                }
+
+                if (current->_next)
+                {
+                    current->_next->_prev = current->_prev;
+                }
+
+                Node *del = current;
+                current = current->_next;
+
+                delete del;
+            }
+            else
+            {
+                current = current->_next;
+            }
+        }
+    }
 
     const Node<T> &operator[](int &index) const {}
 
