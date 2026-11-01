@@ -187,7 +187,7 @@ public:
         }
     }
 
-    const Node<T> &operator[](int &index) const
+    const T &operator[](int index) const
     {
         if (index < 0)
         {
@@ -212,7 +212,7 @@ public:
         return *current;
     }
 
-    Node<T> &operator[](int &index)
+    T &operator[](int index)
     {
         if (index < 0)
         {
