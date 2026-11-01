@@ -17,6 +17,7 @@ private:
     };
 
     Node *_head;
+    int _size = 0;
 
 public:
     TwoLinkedLists() : _head(nullptr) {}
