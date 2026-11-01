@@ -32,7 +32,7 @@ public:
 
     TwoLinkedLists &operator=(TwoLinkedLists &&other) noexcept {}
 
-    void push_tail(T &el)
+    void push_tail(const T &el)
     {
         Node *new_node = new Node(el);
 
@@ -65,7 +65,7 @@ public:
         }
     }
 
-    void push_head(T &el)
+    void push_head(const T &el)
     {
         Node *new_node = new Node(el);
 
