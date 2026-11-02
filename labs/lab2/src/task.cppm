@@ -15,7 +15,7 @@ export void AdressBook(int count_flats, int max_residents_per_flat)
         address_book[i] = TwoLinkedLists<std::string>(residents_count);
     }
 
-    std::cout << "=== Адресная книга дома ===\n\n";
+    std::cout << "Адресная книга дома\n\n";
     for (int i = 0; i < count_flats; ++i)
     {
         std::cout << "Квартира №" << (i + 1) << ": ";
