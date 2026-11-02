@@ -22,15 +22,54 @@ private:
 public:
     TwoLinkedLists() : _head(nullptr), _size(0) {}
 
-    TwoLinkedLists(const TwoLinkedLists &other) {}
+    TwoLinkedLists(const TwoLinkedLists &other)
+    {
+        this->push_tail(other);
+    }
 
-    TwoLinkedLists(TwoLinkedLists &&other) noexcept {}
+    TwoLinkedLists(TwoLinkedLists &&other) noexcept : _head(other._head), _size(other._size)
+    {
+        other._head = nullptr;
+        other._size = 0;
+    }
 
-    ~TwoLinkedLists() {}
+    ~TwoLinkedLists()
+    {
+        while (_head)
+        {
+            this->pop_head();
+        }
+    }
 
-    TwoLinkedLists &operator=(const TwoLinkedLists &other) {}
+    TwoLinkedLists &operator=(const TwoLinkedLists &other)
+    {
+        if (this != &other)
+        {
+            this->~TwoLinkedLists();
 
-    TwoLinkedLists &operator=(TwoLinkedLists &&other) noexcept {}
+            _head = nullptr;
+
+            push_tail(other);
+        }
+
+        return *this;
+    }
+
+    TwoLinkedLists &operator=(TwoLinkedLists &&other) noexcept
+    {
+        if (this != &other)
+        {
+            this->~TwoLinkedLists();
+
+            _head = other._head;
+            _size = other._size;
+
+            other._head = nullptr;
+            other._size = 0;
+        }
+
+        return *this;
+    }
 
     void push_tail(const T &el)
     {
