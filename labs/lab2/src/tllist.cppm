@@ -37,18 +37,18 @@ public:
         else if constexpr (std::is_same_v<T, std::string>)
         {
             std::string names[] = {
-                "Иванов", "Смирнов", "Кузнецов", "Попов", "Васильев",
-                "Петров", "Соколов", "Михайлов", "Новиков", "Фёдоров",
-                "Морозов", "Волков", "Алексеев", "Лебедев", "Семёнов",
-                "Егоров", "Павлов", "Козлов", "Степанов", "Николаев",
-                "Орлов", "Андреев", "Макаров", "Захаров", "Сергеев",
-                "Романов", "Яковлев", "Сорокин", "Воробьёв", "Дмитриев",
-                "Королёв", "Герасимов", "Пономарёв", "Григорьев", "Лазарев",
-                "Медведев", "Ермаков", "Никитин", "Соболев", "Рябов",
-                "Поляков", "Цветков", "Данилов", "Жуков", "Фролов",
-                "Филатов", "Крюков", "Рогов", "Кулаков", "Логинов",
-                "Сафонов", "Капустин", "Кириллов", "Моисеев", "Елисеев",
-                "Кошелев", "Костин", "Горбачёв", "Орехов", "Ефремов"};
+                "Smith", "Johnson", "Williams", "Brown", "Jones",
+                "Garcia", "Miller", "Davis", "Rodriguez", "Martinez",
+                "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson",
+                "Thomas", "Taylor", "Moore", "Jackson", "Martin",
+                "Lee", "Perez", "Thompson", "White", "Harris",
+                "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson",
+                "Walker", "Young", "Allen", "King", "Wright",
+                "Scott", "Torres", "Nguyen", "Hill", "Flores",
+                "Green", "Adams", "Nelson", "Baker", "Hall",
+                "Rivera", "Campbell", "Mitchell", "Carter", "Roberts",
+                "Gomez", "Phillips", "Evans", "Turner", "Diaz",
+                "Parker", "Cruz", "Edwards", "Collins", "Reyes"};
 
             for (int i = 0; i < count; ++i)
             {

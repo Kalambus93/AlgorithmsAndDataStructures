@@ -15,14 +15,14 @@ export void AdressBook(int count_flats, int max_residents_per_flat)
         address_book[i] = TwoLinkedLists<std::string>(residents_count);
     }
 
-    std::cout << "Адресная книга дома\n\n";
+    std::cout << "Adress book the house\n\n";
     for (int i = 0; i < count_flats; ++i)
     {
-        std::cout << "Квартира №" << (i + 1) << ": ";
+        std::cout << "Flat №" << (i + 1) << ": ";
 
         if (address_book[i].GetSize() == 0)
         {
-            std::cout << "(пусто)";
+            std::cout << "(empty)";
         }
         else
         {
