@@ -17,10 +17,10 @@ private:
     };
 
     Node *_head;
-    int _size = 0;
+    int _size;
 
 public:
-    TwoLinkedLists() : _head(nullptr) {}
+    TwoLinkedLists() : _head(nullptr), _size(0) {}
 
     TwoLinkedLists(const TwoLinkedLists &other) {}
 
