@@ -47,8 +47,6 @@ public:
         {
             this->~TwoLinkedLists();
 
-            _head = nullptr;
-
             push_tail(other);
         }
 
@@ -99,7 +97,6 @@ public:
 
     void push_tail(const TwoLinkedLists &list)
     {
-
         for (int i = 0; i < list.GetSize(); ++i)
         {
             this->push_tail(list[i]);
@@ -294,4 +291,19 @@ public:
 };
 
 export template <typename T>
-std::ostream &operator<<(std::ostream &out, const TwoLinkedLists &list) {}
+std::ostream &operator<<(std::ostream &out, const TwoLinkedLists<T> &list)
+{
+    int size = list.GetSize();
+    out << "[";
+    for (int i = 0; i < size; ++i)
+    {
+        out << list[i];
+        if (i != size - 1)
+        {
+            out << ", ";
+        }
+    }
+    out << "]";
+
+    return out;
+}
