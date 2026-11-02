@@ -22,7 +22,49 @@ private:
 public:
     TwoLinkedLists() : _head(nullptr), _size(0) {}
 
-    TwoLinkedLists(const TwoLinkedLists &other)
+    TwoLinkedLists(int count) : _head(nullptr), _size(0)
+    {
+        if constexpr (std::is_same_v<T, int> || std::is_same_v<T, float> || std::is_same_v<T, double>)
+        {
+            for (int i = 0; i < count; ++i)
+            {
+                T random_info = Randomizer(T(0), T(1000));
+                this->push_tail(random_info);
+            }
+        }
+
+        else if constexpr (std::is_same_v<T, std::string>)
+        {
+            std::string names[] = {
+                "Иванов", "Смирнов", "Кузнецов", "Попов", "Васильев",
+                "Петров", "Соколов", "Михайлов", "Новиков", "Фёдоров",
+                "Морозов", "Волков", "Алексеев", "Лебедев", "Семёнов",
+                "Егоров", "Павлов", "Козлов", "Степанов", "Николаев",
+                "Орлов", "Андреев", "Макаров", "Захаров", "Сергеев",
+                "Романов", "Яковлев", "Сорокин", "Воробьёв", "Дмитриев",
+                "Королёв", "Герасимов", "Пономарёв", "Григорьев", "Лазарев",
+                "Медведев", "Ермаков", "Никитин", "Соболев", "Рябов",
+                "Поляков", "Цветков", "Данилов", "Жуков", "Фролов",
+                "Филатов", "Крюков", "Рогов", "Кулаков", "Логинов",
+                "Сафонов", "Капустин", "Кириллов", "Моисеев", "Елисеев",
+                "Кошелев", "Костин", "Горбачёв", "Орехов", "Ефремов"};
+
+            for (int i = 0; i < count; ++i)
+            {
+                int names_count = sizeof(names) / sizeof(names[0]);
+                int random_index = Randomizer(0, names_count - 1);
+
+                this->push_tail(names[random_index]);
+            }
+        }
+
+        else
+        {
+            throw std::logic_error("You can't randomly generate this type");
+        }
+    }
+
+    TwoLinkedLists(const TwoLinkedLists &other) : _head(nullptr), _size(0)
     {
         this->push_tail(other);
     }
